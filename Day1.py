@@ -1,4 +1,6 @@
-import Day1_Input
+from inputs import Day1_Input
+
+
 def find_pair(target, numbers):
     for i in range(0,len(numbers)):
         for j in range(i, len(numbers)):
