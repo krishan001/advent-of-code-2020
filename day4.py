@@ -31,26 +31,25 @@ def fields_present(passports):
 def valid_fields(dcts):
     valid_pass = []
     for dct in dcts:
-        if (valid_range(dct["byr"], 1920, 2002) and valid_range(dct["iyr"], 2010, 2020) and valid_range(dct["eyr"], 2020, 2030)) and valid_height(dct["hgt"]) and valid_eye_colour(dct["ecl"]) and valid_pid(dct["pid"]) != [] and valid_hcl(dct["hcl"]) != []:
+        if (valid_range(dct["byr"], 1920, 2002) and valid_range(dct["iyr"], 2010, 2020) and valid_range(dct["eyr"], 2020, 2030)) and valid_height(dct["hgt"]) and valid_eye_colour(dct["ecl"]) and valid_pid(dct["pid"]) and valid_hcl(dct["hcl"]) :
             valid_pass.append(dct)
     return valid_pass
 
 
 def valid_eye_colour(colour):
-    eye_colour = ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"]
-    return colour in eye_colour
+    return colour in ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"]
 
 
 def valid_range(number, minNum, maxNum):
-    return True if minNum <= int(number) <= maxNum else False
+    return minNum <= int(number) <= maxNum 
 
 
 def valid_pid(pid):
-    return re.findall(r"\d{9}", pid)
+    return re.match(r"\d{9}", pid) is not None
 
 
 def valid_hcl(hcl):
-    return re.findall(r"#[a-zA-Z0-9]{6}", hcl)
+    return re.match(r"#[a-zA-Z0-9]{6}", hcl) is not None
 
 
 def valid_height(height):
