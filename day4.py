@@ -1,20 +1,6 @@
 import re
 from collections import Counter
-
-def read_data():
-    buffer = ""
-    output_lines = []
-    with open("inputs/day4_input.txt") as f:
-        lines = f.read().splitlines()
-        for line in lines:
-            if line != "":
-                buffer += line + " "
-            else:
-                output_lines.append(buffer)
-                buffer = ""
-    output_lines.append(buffer)
-    buffer = ""
-    return output_lines
+from common import read_data_blank_line_separator as read_data
 
 
 def fields_present(passports):
@@ -72,7 +58,7 @@ def get_dict(passport):
 
 
 def main():
-    passports = read_data()
+    passports = read_data("inputs/day4_input.txt")
     pass_with_present_fields = fields_present(passports)
     print(len(pass_with_present_fields))
     print(len(valid_fields(pass_with_present_fields)))
