@@ -17,9 +17,13 @@ def fields_present(passports):
 def valid_fields(dcts):
     valid_pass = []
     for dct in dcts:
-        if (valid_range(dct["byr"], 1920, 2002) and valid_range(dct["iyr"], 2010, 2020) and valid_range(dct["eyr"], 2020, 2030)) and valid_height(dct["hgt"]) and valid_eye_colour(dct["ecl"]) and valid_pid(dct["pid"]) and valid_hcl(dct["hcl"]) :
+        if is_valid(dct) :
             valid_pass.append(dct)
     return valid_pass
+
+
+def is_valid(dct):
+    return (valid_range(dct["byr"], 1920, 2002) and valid_range(dct["iyr"], 2010, 2020) and valid_range(dct["eyr"], 2020, 2030)) and valid_height(dct["hgt"]) and valid_eye_colour(dct["ecl"]) and valid_pid(dct["pid"]) and valid_hcl(dct["hcl"])
 
 
 def valid_eye_colour(colour):
@@ -31,7 +35,7 @@ def valid_range(number, minNum, maxNum):
 
 
 def valid_pid(pid):
-    return re.match(r"\d{9}", pid) is not None
+    return re.match(r"\d*", pid) is not None and len(pid) == 9
 
 
 def valid_hcl(hcl):
