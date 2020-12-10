@@ -1,28 +1,28 @@
 from common import get_input
-from itertools import combinations
-
+"""
+Refactored the code to be neater and more readable.
+"""
 
 def sumOfAnyTwo(target, sublist):
-    for i in range(0, len(sublist)):
-        if target - sublist[i] in sublist[1:]:
+    sublist = [x for x in sublist if x < target]
+    for num in sorted(sublist, reverse = True):
+        if target - num in sublist:
             return True
     return False
 
 
-def part1(numbers, preamble_size, valid):
-    if valid:
-        target = numbers[preamble_size+1]
-        valid = sumOfAnyTwo(target, numbers[1: preamble_size+1])
-        if not valid: 
-            return valid, target
-    valid, target = part1(numbers[1:], preamble_size, valid)
-    if not valid:
-        return valid, target
+def part1(numbers, preamble_size):
+    shortened_list = numbers[preamble_size:]
+    for i in range(preamble_size, len(shortened_list)):
+        sublist = numbers[i - preamble_size: i]
+        result = sumOfAnyTwo(numbers[i], sublist)
+        if not result:
+            return numbers[i]
 
 
 def part2(input_numbers, target):
-    L = [num for num in input_numbers if num < target]
-    lists = [L[i:i+j] for i in range(0,len(L)) for j in range(1,len(L) - i + 1)]
-    for l in lists:
-        if sum(l) == target and len(l) != 1:
-            return min(l) + max(l)
+    for i in range(0, len(input_numbers)):
+        for j in range(i+1, len(input_numbers)):
+            l = input_numbers[i:j]
+            if sum(l) == target:
+                return min(l) + max(l)
